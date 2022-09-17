@@ -1,4 +1,4 @@
-package src.application.db;
+package src.application.db.config;
 
 import src.application.db.exceptions.DbException;
 

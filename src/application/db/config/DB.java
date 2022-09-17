@@ -58,6 +58,17 @@ public class DB {
         }
     }
 
+    public static void closePreparedStatement(PreparedStatement preparedStatement){
+        try{
+            if(preparedStatement != null){
+                preparedStatement.close();
+            }
+        }
+        catch (SQLException e){
+            throw new DbException(e.getMessage());
+        }
+    }
+
     private static Properties loadProperties(){
         try (FileInputStream fs = new FileInputStream("./src/resources/config/db.properties")){
             Properties props = new Properties();

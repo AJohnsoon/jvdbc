@@ -8,7 +8,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 
-public class DepartmentData {
+public class Department {
     public void selectData(Connection conn) throws SQLException {
         Statement statement = null;
         ResultSet resultSet = null;

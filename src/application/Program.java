@@ -2,27 +2,34 @@ package src.application;
 
 import src.application.db.config.DB;
 import src.application.db.exceptions.DbException;
+import src.application.utils.Department;
+import src.application.utils.Seller;
 
 import java.sql.Connection;
-import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.sql.Statement;
 
 public class Program {
+    public static final Connection conn = null;
+
     public static void main(String[] args) throws SQLException {
 
-            Connection conn = null;
-            Statement statement = null;
-            ResultSet resultSet = null;
-
             try{
-                conn = DB.getConnection();
-                statement = conn.createStatement();
-                resultSet = statement.executeQuery("SELECT * FROM department");
+                Department vDataDepartament = new Department();
+                Seller vSellerData = new Seller();
 
-                while (resultSet.next()){
-                    System.out.println(resultSet.getInt("Id") + ", " + resultSet.getString("Name"));
-                }
+                System.out.println("* Department DATA *");
+                vDataDepartament.selectData(conn);
+
+                System.out.println();
+
+                System.out.println("* Department SELLER *");
+                vSellerData.selectData(conn);
+
+                System.out.println();
+
+                System.out.println("* Insert into DB *");
+                vSellerData.insertData(conn);
+
 
             }
             catch (SQLException e){
@@ -30,8 +37,6 @@ public class Program {
             }
             finally {
 
-                DB.closeResults(resultSet);
-                DB.closeStatement(statement);
                 DB.closeConnection();
 
             }

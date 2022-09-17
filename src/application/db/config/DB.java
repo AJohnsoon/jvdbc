@@ -1,10 +1,10 @@
 package src.application.db;
 
+import src.application.db.exceptions.DbException;
+
 import java.io.FileInputStream;
 import java.io.IOException;
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.SQLException;
+import java.sql.*;
 import java.util.Properties;
 
 public class DB {
@@ -33,6 +33,28 @@ public class DB {
             catch (SQLException e){
                 throw new DbException(e.getMessage());
             }
+        }
+    }
+
+    public static void closeStatement(Statement statement){
+        if(statement != null){
+            try{
+                statement.close();
+            }
+            catch (SQLException e){
+                throw new DbException(e.getMessage());
+            }
+        }
+    }
+
+    public static void closeResults(ResultSet resultSet){
+        try{
+            if(resultSet != null){
+                resultSet.close();
+            }
+        }
+        catch (SQLException e){
+            throw new DbException(e.getMessage());
         }
     }
 

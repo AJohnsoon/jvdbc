@@ -1,7 +1,7 @@
-package src.application.utils;
+package src.main.java.application.utils;
 
-import src.application.db.config.DB;
-import src.application.db.exceptions.DbException;
+import src.main.java.application.db.config.DB;
+import src.main.java.application.db.exceptions.DbException;
 
 import java.sql.Connection;
 import java.sql.ResultSet;

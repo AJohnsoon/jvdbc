@@ -1,6 +1,6 @@
-package src.application.db.config;
+package src.main.java.application.db.config;
 
-import src.application.db.exceptions.DbException;
+import src.main.java.application.db.exceptions.DbException;
 
 import java.io.FileInputStream;
 import java.io.IOException;

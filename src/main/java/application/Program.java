@@ -1,9 +1,9 @@
-package src.application;
+package src.main.java.application;
 
-import src.application.db.config.DB;
-import src.application.db.exceptions.DbException;
-import src.application.utils.Department;
-import src.application.utils.Seller;
+import src.main.java.application.db.config.DB;
+import src.main.java.application.db.exceptions.DbException;
+import src.main.java.application.utils.Department;
+import src.main.java.application.utils.Seller;
 
 import java.sql.Connection;
 import java.sql.SQLException;
@@ -14,11 +14,11 @@ public class Program {
     public static void main(String[] args) throws SQLException {
 
             try{
-                Department vDataDepartament = new Department();
+                Department vDataDepartment = new Department();
                 Seller vSellerData = new Seller();
 
                 System.out.println("* Department DATA *");
-                vDataDepartament.selectData(conn);
+                vDataDepartment.selectData(conn);
 
                 System.out.println();
 
@@ -29,7 +29,6 @@ public class Program {
 
                 System.out.println("* Insert into DB *");
                 vSellerData.insertData(conn);
-
 
             }
             catch (SQLException e){

@@ -1,7 +1,7 @@
-package src.application.utils;
+package src.main.java.application.utils;
 
-import src.application.db.config.DB;
-import src.application.db.exceptions.DbException;
+import src.main.java.application.db.config.DB;
+import src.main.java.application.db.exceptions.DbException;
 
 import java.sql.*;
 import java.text.ParseException;
@@ -48,7 +48,7 @@ public class Seller {
 
             int rowsAffected = preparedStatement.executeUpdate();
 
-            if (rowsAffected >0){
+            if (rowsAffected > 0){
                 ResultSet resultSet = preparedStatement.getGeneratedKeys();
                 while (resultSet.next()){
                     int id = resultSet.getInt(1);

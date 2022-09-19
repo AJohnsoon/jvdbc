@@ -3,10 +3,8 @@ package src.main.java.application.utils;
 import src.main.java.application.db.config.DB;
 import src.main.java.application.db.exceptions.DbException;
 
-import java.sql.Connection;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Statement;
+import java.sql.*;
+import java.text.ParseException;
 
 public class Department {
     public void selectData(Connection conn) throws SQLException {
@@ -30,5 +28,46 @@ public class Department {
             DB.closeStatement(statement);
         }
 
+    }
+    public void insertData(Connection conn){
+        PreparedStatement preparedStatement = null;
+        try{
+            conn = DB.getConnection();
+            preparedStatement = conn.prepareStatement(
+                    "INSERT INTO department (Name)"
+                            + "VALUE (?)", Statement.RETURN_GENERATED_KEYS);
+            preparedStatement.setString(1, "Computers");
+
+            int rowsAffected = preparedStatement.executeUpdate();
+
+            if (rowsAffected > 0){
+                ResultSet resultSet = preparedStatement.getGeneratedKeys();
+                while (resultSet.next()){
+                    int id = resultSet.getInt(1);
+                    System.out.println("Done ! Rows affected: "+ id);
+                }
+            }
+        }
+        catch (SQLException e){
+            e.getStackTrace();
+        } finally {
+            DB.closePreparedStatement(preparedStatement);
+        }
+    }
+    public void updateData(Connection conn) throws SQLException {
+        PreparedStatement preparedStatement = null;
+
+        try{
+            conn = DB.getConnection();
+            preparedStatement = conn.prepareStatement("UPDATE department SET Name = ? WHERE (Name = ?)");
+            preparedStatement.setString(1, "Technology");
+            preparedStatement.setString(2, "Computers");
+
+            int rowsAffect = preparedStatement.executeUpdate();
+            System.out.println("Done ! Rows Affected: " + rowsAffect);
+        }
+        catch (SQLException e){
+            e.getStackTrace();
+        }
     }
 }

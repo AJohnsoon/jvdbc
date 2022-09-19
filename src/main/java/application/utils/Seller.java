@@ -62,4 +62,21 @@ public class Seller {
             DB.closePreparedStatement(preparedStatement);
         }
     }
+
+    public void updateData(Connection conn) throws SQLException {
+        PreparedStatement preparedStatement = null;
+
+        try{
+            conn = DB.getConnection();
+            preparedStatement = conn.prepareStatement("UPDATE seller SET Name = ? WHERE (Name = ?)");
+            preparedStatement.setString(1, "Marlon Orange");
+            preparedStatement.setString(2, "Marlon Red");
+
+            int rowsAffect = preparedStatement.executeUpdate();
+            System.out.println("Done ! Rows Affected: " + rowsAffect);
+        }
+        catch (SQLException e){
+            e.getStackTrace();
+        }
+    }
 }

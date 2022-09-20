@@ -4,6 +4,7 @@ import src.main.java.application.db.config.DB;
 import src.main.java.application.db.exceptions.DbException;
 import src.main.java.application.utils.Department;
 import src.main.java.application.utils.Seller;
+import src.main.java.application.utils.Transaction;
 
 import java.sql.Connection;
 import java.sql.SQLException;
@@ -14,6 +15,7 @@ public class Program {
     public static void main(String[] args) throws SQLException {
         Department vDataDepartment = new Department();
         Seller vSellerData = new Seller();
+        Transaction vTransactionData = new Transaction();
 
             try{
 
@@ -30,6 +32,12 @@ public class Program {
                 vSellerData.insertData(conn);
                 vSellerData.updateData(conn);
                 vSellerData.deleteData(conn);
+
+                System.out.println("______________________________________________________________");
+
+                System.out.println("* Transaction DATA *");
+                vTransactionData.transactionData(conn);
+
             }
             catch (SQLException e){
                 throw new DbException(e.getMessage());

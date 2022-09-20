@@ -2,6 +2,7 @@ package src.main.java.application.utils;
 
 import src.main.java.application.db.config.DB;
 import src.main.java.application.db.exceptions.DbException;
+import src.main.java.application.db.exceptions.DbIntegrityException;
 
 import java.sql.*;
 import java.text.ParseException;
@@ -10,7 +11,6 @@ import java.text.SimpleDateFormat;
 public class Seller {
 
     public static final SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
-
     public void selectData(Connection conn){
         Statement statement = null;
         ResultSet resultSet = null;
@@ -32,7 +32,6 @@ public class Seller {
             DB.closeStatement(statement);
         }
     }
-
     public void insertData(Connection conn){
         PreparedStatement preparedStatement = null;
         try{
@@ -40,7 +39,7 @@ public class Seller {
             preparedStatement = conn.prepareStatement(
                     "INSERT INTO seller (Name, Email, BirthDate, BaseSalary, DepartmentId)"
                     + "VALUES (?,?,?,?,?)", Statement.RETURN_GENERATED_KEYS);
-            preparedStatement.setString(1, "Marlon Red");
+            preparedStatement.setString(1, "Marlon Orange");
             preparedStatement.setString(2,"marlonred@teste.com");
             preparedStatement.setDate(3, new java.sql.Date(sdf.parse("19/03/1987").getTime()));
             preparedStatement.setDouble(4, 2000.0);
@@ -62,7 +61,6 @@ public class Seller {
             DB.closePreparedStatement(preparedStatement);
         }
     }
-
     public void updateData(Connection conn) throws SQLException {
         PreparedStatement preparedStatement = null;
 
@@ -77,6 +75,21 @@ public class Seller {
         }
         catch (SQLException e){
             e.getStackTrace();
+        }
+    }
+    public void deleteData(Connection conn) throws SQLException {
+        PreparedStatement preparedStatement = null;
+
+        try{
+            conn = DB.getConnection();
+            preparedStatement = conn.prepareStatement("DELETE FROM seller WHERE Id = ?");
+            preparedStatement.setInt(1,9);
+
+            int rowsAffect = preparedStatement.executeUpdate();
+            System.out.println("Done ! Rows Affected: " + rowsAffect);
+        }
+        catch (SQLException e){
+            throw new DbIntegrityException(e.getMessage());
         }
     }
 }

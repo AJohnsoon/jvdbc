@@ -18,39 +18,18 @@ public class Program {
             try{
 
                 System.out.println("* Department DATA *");
-
-                System.out.println("* select into DB *");
                 vDataDepartment.selectData(conn);
-
-                System.out.println();
-
-                System.out.println("* insert into DB *");
                 vDataDepartment.insertData(conn);
-
-                System.out.println();
-
-
-                System.out.println("* Update into DB *");
                 vDataDepartment.updateData(conn);
+                vDataDepartment.deleteData(conn);
 
                 System.out.println("______________________________________________________________");
 
-                System.out.println();
-
                 System.out.println("* Seller DATA *");
-
-                System.out.println("* Select into DB *");
                 vSellerData.selectData(conn);
-
-                System.out.println();
-
-                System.out.println("* Insert into DB *");
                 vSellerData.insertData(conn);
-
-                System.out.println();
-
-                System.out.println("* Update into DB *");
                 vSellerData.updateData(conn);
+                vSellerData.deleteData(conn);
             }
             catch (SQLException e){
                 throw new DbException(e.getMessage());

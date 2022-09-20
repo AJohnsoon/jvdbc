@@ -2,9 +2,9 @@ package src.main.java.application.utils;
 
 import src.main.java.application.db.config.DB;
 import src.main.java.application.db.exceptions.DbException;
+import src.main.java.application.db.exceptions.DbIntegrityException;
 
 import java.sql.*;
-import java.text.ParseException;
 
 public class Department {
     public void selectData(Connection conn) throws SQLException {
@@ -68,6 +68,21 @@ public class Department {
         }
         catch (SQLException e){
             e.getStackTrace();
+        }
+    }
+    public void deleteData(Connection conn) throws SQLException {
+        PreparedStatement preparedStatement = null;
+
+        try{
+            conn = DB.getConnection();
+            preparedStatement = conn.prepareStatement("DELETE FROM department WHERE Id = ?");
+            preparedStatement.setInt(1,6);
+
+            int rowsAffect = preparedStatement.executeUpdate();
+            System.out.println("Done ! Rows Affected: " + rowsAffect);
+        }
+        catch (SQLException e){
+            throw new DbIntegrityException(e.getMessage());
         }
     }
 }

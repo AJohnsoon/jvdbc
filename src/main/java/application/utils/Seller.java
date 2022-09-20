@@ -9,11 +9,11 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 
 public class Seller {
-
+    private Statement statement = null;
+    private ResultSet resultSet = null;
+    private PreparedStatement preparedStatement = null;
     public static final SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
     public void selectData(Connection conn){
-        Statement statement = null;
-        ResultSet resultSet = null;
         try{
             conn = DB.getConnection();
             statement = conn.createStatement();
@@ -33,7 +33,6 @@ public class Seller {
         }
     }
     public void insertData(Connection conn){
-        PreparedStatement preparedStatement = null;
         try{
             conn = DB.getConnection();
             preparedStatement = conn.prepareStatement(
@@ -62,8 +61,6 @@ public class Seller {
         }
     }
     public void updateData(Connection conn) throws SQLException {
-        PreparedStatement preparedStatement = null;
-
         try{
             conn = DB.getConnection();
             preparedStatement = conn.prepareStatement("UPDATE seller SET Name = ? WHERE (Name = ?)");
@@ -78,8 +75,6 @@ public class Seller {
         }
     }
     public void deleteData(Connection conn) throws SQLException {
-        PreparedStatement preparedStatement = null;
-
         try{
             conn = DB.getConnection();
             preparedStatement = conn.prepareStatement("DELETE FROM seller WHERE Id = ?");

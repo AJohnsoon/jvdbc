@@ -7,9 +7,11 @@ import src.main.java.application.db.exceptions.DbIntegrityException;
 import java.sql.*;
 
 public class Department {
+    private Statement statement = null;
+    private ResultSet resultSet = null;
+    private PreparedStatement preparedStatement = null;
+
     public void selectData(Connection conn) throws SQLException {
-        Statement statement = null;
-        ResultSet resultSet = null;
         try{
             conn = DB.getConnection();
             statement = conn.createStatement();
@@ -30,7 +32,6 @@ public class Department {
 
     }
     public void insertData(Connection conn){
-        PreparedStatement preparedStatement = null;
         try{
             conn = DB.getConnection();
             preparedStatement = conn.prepareStatement(
@@ -55,8 +56,6 @@ public class Department {
         }
     }
     public void updateData(Connection conn) throws SQLException {
-        PreparedStatement preparedStatement = null;
-
         try{
             conn = DB.getConnection();
             preparedStatement = conn.prepareStatement("UPDATE department SET Name = ? WHERE (Name = ?)");
@@ -71,8 +70,6 @@ public class Department {
         }
     }
     public void deleteData(Connection conn) throws SQLException {
-        PreparedStatement preparedStatement = null;
-
         try{
             conn = DB.getConnection();
             preparedStatement = conn.prepareStatement("DELETE FROM department WHERE Id = ?");

@@ -12,7 +12,7 @@ public class Seller {
     private Statement statement = null;
     private ResultSet resultSet = null;
     private PreparedStatement preparedStatement = null;
-    public static final SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
+    private static final SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
     public void selectData(Connection conn){
         try{
             conn = DB.getConnection();

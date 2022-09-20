@@ -10,7 +10,6 @@ public class Department {
     private Statement statement = null;
     private ResultSet resultSet = null;
     private PreparedStatement preparedStatement = null;
-
     public void selectData(Connection conn) throws SQLException {
         try{
             conn = DB.getConnection();

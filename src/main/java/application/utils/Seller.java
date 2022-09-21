@@ -35,6 +35,7 @@ public class Seller {
     public void insertData(Connection conn){
         try{
             conn = DB.getConnection();
+            conn.setAutoCommit(false);
             preparedStatement = conn.prepareStatement(
                     "INSERT INTO seller (Name, Email, BirthDate, BaseSalary, DepartmentId)"
                     + "VALUES (?,?,?,?,?)", Statement.RETURN_GENERATED_KEYS);
@@ -53,9 +54,16 @@ public class Seller {
                     System.out.println("Done ! Rows affected: "+ id);
                 }
             }
+            conn.commit();
         }
         catch (SQLException | ParseException e){
-            e.getStackTrace();
+            try{
+                conn.rollback();
+                throw new DbException("Transaction rollback "+ e.getMessage());
+            }
+            catch (SQLException rolledback){
+                throw new DbException("Error trying to rollback " + rolledback.getMessage());
+            }
         } finally {
             DB.closePreparedStatement(preparedStatement);
         }
@@ -63,28 +71,42 @@ public class Seller {
     public void updateData(Connection conn) throws SQLException {
         try{
             conn = DB.getConnection();
+            conn.setAutoCommit(false);
             preparedStatement = conn.prepareStatement("UPDATE seller SET Name = ? WHERE (Name = ?)");
             preparedStatement.setString(1, "Marlon Orange");
             preparedStatement.setString(2, "Marlon Red");
 
             int rowsAffect = preparedStatement.executeUpdate();
             System.out.println("Done ! Rows Affected: " + rowsAffect);
+            conn.commit();
         }
         catch (SQLException e){
-            e.getStackTrace();
-        }
+            try{
+                conn.rollback();
+                throw new DbException("Transaction rollback "+ e.getMessage());
+            }
+            catch (SQLException rolledback){
+                throw new DbException("Error trying to rollback " + rolledback.getMessage());
+            }        }
     }
     public void deleteData(Connection conn) throws SQLException {
         try{
             conn = DB.getConnection();
+            conn.setAutoCommit(false);
             preparedStatement = conn.prepareStatement("DELETE FROM seller WHERE Id = ?");
             preparedStatement.setInt(1,9);
 
             int rowsAffect = preparedStatement.executeUpdate();
             System.out.println("Done ! Rows Affected: " + rowsAffect);
+            conn.commit();
         }
         catch (SQLException e){
-            throw new DbIntegrityException(e.getMessage());
-        }
+            try{
+                conn.rollback();
+                throw new DbIntegrityException("Transaction rolled back!! "+ e.getMessage());
+            }
+            catch (SQLException rolledback){
+                throw new DbIntegrityException("Error trying to rollback" + rolledback.getMessage());
+            }        }
     }
 }
